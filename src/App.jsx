@@ -24,13 +24,12 @@ function App() {
           <ul>
             <li>⚡️ Vite for fast development</li>
             <li>⚛️ React 18 with hooks</li>
-            <li>🎨 Modern CSS styling</li>
-            <li>🔥 Hot module replacement</li>
+            <li>🎨 Modern CSS sty
           </ul>
         </div>
       </header>
     </div>
-  )
+
 }
 
 export default App 
