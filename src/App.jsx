@@ -12,7 +12,7 @@ function App() {
         
         <div className="card">
           <button onClick={() => setCount((count) => count + 1)}>
-            Count is {count
+            Count is {count}
           </button>
           <p>
             Edit <code>src/App.jsx</code> and save to test HMR
@@ -24,12 +24,13 @@ function App() {
           <ul>
             <li>⚡️ Vite for fast development</li>
             <li>⚛️ React 18 with hooks</li>
-            <li>🎨 Modern CSS sty
+            <li>🎨 Modern CSS styling</li>
+            <li>🔥 Hot module replacement</li>
           </ul>
         </div>
       </header>
     </div>
-
-}}
+  )
+}
 
 export default App 
