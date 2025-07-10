@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './App.css'
+import './Ap
 
 function App() {
   const [count, setCount] = useState(0)
@@ -17,8 +17,7 @@ function App() {
           <p>
             Edit <code>src/App.jsx</code> and save to test HMR
           </p>
-        </div>
-        
+
         <div className="features">
           <h2>Features included:</h2>
           <ul>
@@ -30,7 +29,6 @@ function App() {
         </div>
       </header>
     </div>
-  )
-}
+
 
 export default App 
