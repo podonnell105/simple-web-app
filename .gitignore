@@ -1,2 +1,4 @@
 /node_modules
 /package-lock.json
+# CodeFix temporary database folders
+.codefix_repo_db_*
