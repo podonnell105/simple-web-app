@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Application</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+      window.BUG_REPORTER_CONFIG = {
+        repoUrl: 'https://github.com/podonnell105/simple-web-app',
+        apiUrl: 'https://5e4048093d8f.ngrok-free.app/v1/issues'
+      };
+    </script>
+    <style>
+      /* Ensure bug reporter widget appears on top of everything */
+      #bug-reporter-widget,
+      .bug-reporter-widget,
+      [id*="bug-reporter"],
+      [class*="bug-reporter"] {
+        z-index: 9999 !important;
+        position: fixed !important;
+      }
+      
+      /* Ensure any bug reporter container is above all dashboard elements */
+      .dashboard * {
+        z-index: auto;
+      }
+      
+      /* Specific override for any bug reporter elements */
+      div[id*="bug-reporter"],
+      div[class*="bug-reporter"],
+      iframe[id*="bug-reporter"],
+      iframe[class*="bug-reporter"] {
+        z-index: 99999 !important;
+        position: fixed !important;
+      }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1>📊 Analytics Dashboard</h1>
+                <div class="header-controls">
+                    <div class="time-display">
+                        <span id="timeDisplay">--:--:--</span>
+                    </div>
+                    <button class="control-btn" id="visibilityToggle" title="Toggle Visibility">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            <!-- Stats Grid -->
+            <section class="stats-section">
+                <div class="stats-grid" id="statsGrid">
+                    <!-- Stats cards will be rendered here -->
+                </div>
+            </section>
+
+            <!-- Charts Grid -->
+            <section class="charts-section">
+                <div class="charts-grid" id="chartsGrid">
+                    <!-- Charts will be rendered here -->
+                </div>
+            </section>
+
+            <!-- Gauges Grid -->
+            <section class="gauges-section">
+                <h2>📊 Performance Metrics</h2>
+                <div class="gauge-grid" id="gaugeGrid">
+                    <!-- Gauges will be rendered here -->
+                </div>
+            </section>
+
+            <!-- Data Table -->
+            <section class="table-section">
+                <div id="dataTableContainer">
+                    <!-- Data table will be rendered here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Load JavaScript files -->
+    <script src="bug-reporter.js"></script>
+    <script src="app.js"></script>
+</body>
+</html> 
