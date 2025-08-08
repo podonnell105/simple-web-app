@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug Reporter Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🐛 Bug Reporter Test</h1>
+        
+        <button class="test-button" onclick="testBugReporter()">Test Bug Reporter</button>
+        <button class="test-button" onclick="testDirectAPI()">Test Direct API Call</button>
+        <button class="test-button" onclick="clearLog()">Clear Log</button>
+        
+        <div class="log" id="log"></div>
+    </div>
+
+    <script>
+        window.BUG_REPORTER_CONFIG = {
+            apiUrl: 'https://5e4048093d8f.ngrok-free.app/api/issues',
+            repoUrl: 'https://github.com/podonnell105/simple-web-app',
+            buttonSize: 60,
+            buttonColor: '#ff4757',
+            buttonHoverColor: '#ff3742'
+        };
+
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `[${timestamp}] ${message}\n`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        function testDirectAPI() {
+            log('🧪 Testing direct API call...');
+            
+            const testData = {
+                title: 'Test Bug from Direct API',
+                description: 'This is a test bug submitted directly via API',
+                repository_id: 1,
+                repository_url: 'https://github.com/podonnell105/simple-web-app',
+                priority: 'medium',
+                severity: 'medium',
+                user_agent: 'Test Browser',
+                steps_to_reproduce: '1. Test step\n2. Another step'
+            };
+
+            log(`📤 Sending request to: ${window.BUG_REPORTER_CONFIG.apiUrl}`);
+            log(`📦 Request data: ${JSON.stringify(testData, null, 2)}`);
+
+            fetch(window.BUG_REPORTER_CONFIG.apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer test-token-1',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(testData)
+            })
+            .then(response => {
+                log(`📥 Response status: ${response.status}`);
+                log(`📥 Response headers: ${JSON.stringify([...response.headers.entries()])}`);
+                return response.json();
+            })
+            .then(data => {
+                log(`✅ Response data: ${JSON.stringify(data, null, 2)}`);
+            })
+            .catch(error => {
+                log(`❌ Error: ${error.message}`);
+            });
+        }
+
+        function testBugReporter() {
+            log('🧪 Testing bug reporter initialization...');
+            
+            // Load the bug reporter script
+            const script = document.createElement('script');
+            script.src = 'bug-reporter.js';
+            script.onload = () => {
+                log('✅ Bug reporter script loaded');
+                
+                // Wait a moment for initialization
+                setTimeout(() => {
+                    const button = document.querySelector('.bug-reporter-button');
+                    const modal = document.querySelector('.bug-reporter-modal');
+                    const form = document.getElementById('bugForm');
+                    
+                    log(`🔍 Bug reporter elements found:`);
+                    log(`  - Button: ${!!button}`);
+                    log(`  - Modal: ${!!modal}`);
+                    log(`  - Form: ${!!form}`);
+                    
+                    if (button) {
+                        log('🖱️ Clicking bug reporter button...');
+                        button.click();
+                        
+                        setTimeout(() => {
+                            const modal = document.querySelector('.bug-reporter-modal');
+                            log(`📋 Modal visible: ${modal && modal.style.display === 'flex'}`);
+                            
+                            if (form) {
+                                log('📝 Filling form...');
+                                document.getElementById('bugError').value = 'Test Error Message';
+                                document.getElementById('bugContext').value = 'Test Description';
+                                document.getElementById('bugSteps').value = '1. Test step\n2. Another step';
+                                document.getElementById('bugSeverity').value = 'medium';
+                                document.getElementById('bugSource').value = 'test';
+                                
+                                log('🚀 Submitting form...');
+                                form.dispatchEvent(new Event('submit', { bubbles: true }));
+                            }
+                        }, 1000);
+                    }
+                }, 2000);
+            };
+            script.onerror = () => {
+                log('❌ Failed to load bug reporter script');
+            };
+            document.head.appendChild(script);
+        }
+
+        // Auto-log console messages
+        const originalLog = console.log;
+        const originalError = console.error;
+        
+        console.log = function(...args) {
+            log(`ℹ️ ${args.join(' ')}`);
+            originalLog.apply(console, args);
+        };
+        
+        console.error = function(...args) {
+            log(`❌ ${args.join(' ')}`);
+            originalError.apply(console, args);
+        };
+
+        log('🚀 Test page loaded');
+    </script>
+</body>
+</html> 

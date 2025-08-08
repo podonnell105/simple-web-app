@@ -8,12 +8,36 @@
     <script>
       window.BUG_REPORTER_CONFIG = {
         repoUrl: 'https://github.com/podonnell105/simple-web-app',
-        apiUrl: 'https://d88e9909bd15.ngrok-free.app/v1/issues'
+        apiUrl: 'https://5e4048093d8f.ngrok-free.app/v1/issues'
       };
       const script = document.createElement('script');
-    
+      script.src = '/static/bug-reporter.js';
       document.head.appendChild(script);
     </script>
+    <style>
+      /* Ensure bug reporter widget appears on top of everything */
+      #bug-reporter-widget,
+      .bug-reporter-widget,
+      [id*="bug-reporter"],
+      [class*="bug-reporter"] {
+        z-index: 9999 !important;
+        position: fixed !important;
+      }
+      
+      /* Ensure any bug reporter container is above all dashboard elements */
+      .dashboard * {
+        z-index: auto;
+      }
+      
+      /* Specific override for any bug reporter elements */
+      div[id*="bug-reporter"],
+      div[class*="bug-reporter"],
+      iframe[id*="bug-reporter"],
+      iframe[class*="bug-reporter"] {
+        z-index: 99999 !important;
+        position: fixed !important;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
